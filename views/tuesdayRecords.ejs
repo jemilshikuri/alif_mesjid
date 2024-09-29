@@ -1,0 +1,33 @@
+<main class="main">
+    <section class="records-section">
+      <h2>Tuesday Records</h2>
+      <a href="/tuesday/records/new">Add New Record</a>
+      <ul>
+        <% if (records.length === 0) { %>
+          <li>No records found</li>
+        <% } %>
+        <% records.forEach(record => { %>
+          <li>
+            <% if (record.file.endsWith('.mp4') || record.file.endsWith('.mkv') || record.file.endsWith('.flv') || record.file.endsWith('.mpg') || record.file.endsWith('.webm')) { %>
+              <video width="320" height="240" controls>
+                <source src="/<%= record.file %>" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            <% } else if (record.file.endsWith('.mp3') || record.file.endsWith('.ogg') || record.file.endsWith('.wav') || record.file.endsWith('.mpeg')) { %>
+              <audio controls>
+                <source src="/<%= record.file %>" type="audio/mpeg">
+                Your browser does not support the audio tag.
+              </audio>
+            <% } %>
+            <p><a href="/<%= record.file %>">View File</a></p>
+            <p>Description: <%= record.description %></p>
+            <a href="/tuesday/records/edit/<%= record._id %>">Edit</a>
+            <form action="/tuesday/records/delete/<%= record._id %>" method="POST" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+  </main>
+  
